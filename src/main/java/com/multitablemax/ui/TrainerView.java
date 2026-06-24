@@ -246,6 +246,7 @@ public final class TrainerView {
         if (text.isEmpty()) {
             return;
         }
+        Fact asked = engine.current();   // пример до того, как движок сменит вопрос
         QuizEngine.Result result = engine.submit(Integer.parseInt(text));
         sessionTotal++;
         if (result.correct()) {
@@ -253,7 +254,8 @@ public final class TrainerView {
             feedbackLabel.setText(praise(result));
             setFeedbackState("correct");
         } else {
-            feedbackLabel.setText("Почти! Правильно: " + result.correctAnswer());
+            // Показываем пример целиком — вопрос уже сменился, иначе непонятно, к чему ответ.
+            feedbackLabel.setText("Почти! Правильно: " + asked + " = " + result.correctAnswer());
             setFeedbackState("wrong");
         }
         onProgressChanged.run();
