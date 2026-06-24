@@ -3,8 +3,12 @@ name: Build (Windows)
 on:
   push:
     branches: [ main ]
+    tags: [ 'v*' ]        # пуш тега вида v1.0.0 → собрать и опубликовать Release
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: write          # нужно, чтобы workflow мог создать Release
 
 jobs:
   build-windows:
@@ -24,6 +28,19 @@ jobs:
       - name: Install WiX Toolset (needed by jpackage for .msi)
         run: choco install wixtoolset --no-progress -y
 
+      # Версия установщика: из тега (v1.2.3 → 1.2.3), иначе 1.0.0.
+      - name: Determine version
+        id: ver
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF -like 'refs/tags/v*') {
+            $v = $env:GITHUB_REF -replace 'refs/tags/v', ''
+          } else {
+            $v = '1.0.0'
+          }
+          "version=$v" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          Write-Host "App version: $v"
+
       - name: Build custom runtime image (jlink)
         run: mvn -B clean javafx:jlink
 
@@ -34,7 +51,7 @@ jobs:
           jpackage
           --type msi
           --name MultiTableMax
-          --app-version 1.0.0
+          --app-version ${{ steps.ver.outputs.version }}
           --vendor "MultiTableMax"
           --runtime-image target/MultiTableMax
           --module com.multitablemax/com.multitablemax.Launcher
@@ -43,9 +60,18 @@ jobs:
           --win-menu
           --win-shortcut
 
-      - name: Upload .msi installer
+      - name: Upload .msi installer (artifact)
         uses: actions/upload-artifact@v4
         with:
           name: MultiTableMax-windows-installer
           path: target/dist/*.msi
           if-no-files-found: error
+
+      # Только при пуше тега v* — создаём (или обновляем) Release и прикрепляем .msi.
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: MultiTableMax ${{ steps.ver.outputs.version }}
+          generate_release_notes: true
+          files: target/dist/*.msi
