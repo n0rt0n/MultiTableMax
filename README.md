@@ -46,9 +46,10 @@ mvn clean javafx:run
 
 При пуше в `main` (а также вручную через «Run workflow») запускается
 `.github/workflows/build.yml`: на `windows-latest` ставится JDK 25 и WiX,
-собирается jlink-образ и `jpackage` делает **`.msi`-установщик**. Готовый файл
-лежит в артефактах сборки (`MultiTableMax-windows-installer`). Установщик включает
-свою JRE — у пользователя Java не нужна.
+собирается jlink-образ и `jpackage` делает **`.msi`-установщик** с иконкой
+(`packaging/app.ico` — король-босс). Готовый файл лежит в артефактах сборки
+(`MultiTableMax-windows-installer`). Установщик включает свою JRE — у пользователя
+Java не нужна. Иконка окна приложения берётся из `resources/bosses/boss-0.png`.
 
 ### Выпуск релиза (с прикреплённым .msi)
 

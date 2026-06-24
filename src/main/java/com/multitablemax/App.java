@@ -38,6 +38,11 @@ public final class App extends Application {
             scene.getStylesheets().add(css.toExternalForm());
         }
 
+        var icon = App.class.getResource("/bosses/boss-0.png");
+        if (icon != null) {
+            stage.getIcons().add(new javafx.scene.image.Image(icon.toExternalForm()));
+        }
+
         stage.setTitle("Тренажёр для Макса — таблица умножения");
         stage.setScene(scene);
         stage.setMinWidth(480);

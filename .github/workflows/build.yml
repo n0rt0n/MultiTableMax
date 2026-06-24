@@ -53,6 +53,7 @@ jobs:
           --name MultiTableMax
           --app-version ${{ steps.ver.outputs.version }}
           --vendor "MultiTableMax"
+          --icon packaging/app.ico
           --runtime-image target/MultiTableMax
           --module com.multitablemax/com.multitablemax.Launcher
           --dest target/dist
