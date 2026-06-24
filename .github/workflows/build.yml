@@ -1,0 +1,51 @@
+name: Build (Windows)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      - name: Install WiX Toolset (needed by jpackage for .msi)
+        run: choco install wixtoolset --no-progress -y
+
+      - name: Build custom runtime image (jlink)
+        run: mvn -B clean javafx:jlink
+
+      # jpackage берёт уже собранный jlink-образ (target/MultiTableMax),
+      # в котором лежит наш модуль и JavaFX — поэтому WiX делает .msi без отдельной JRE.
+      - name: Package Windows installer (jpackage .msi)
+        run: >
+          jpackage
+          --type msi
+          --name MultiTableMax
+          --app-version 1.0.0
+          --vendor "MultiTableMax"
+          --runtime-image target/MultiTableMax
+          --module com.multitablemax/com.multitablemax.Launcher
+          --dest target/dist
+          --win-dir-chooser
+          --win-menu
+          --win-shortcut
+
+      - name: Upload .msi installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: MultiTableMax-windows-installer
+          path: target/dist/*.msi
+          if-no-files-found: error

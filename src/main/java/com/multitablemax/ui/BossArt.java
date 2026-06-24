@@ -5,7 +5,9 @@ public enum BossArt {
     /** Готовый emoji-монстр. */
     EMOJI,
     /** Монстр, нарисованный фигурами на JavaFX Canvas. */
-    CANVAS;
+    CANVAS,
+    /** Готовая картинка-монстр (PNG из ресурсов /bosses). */
+    IMAGE;
 
     /** Безопасный разбор из строки (для хранилища); по умолчанию EMOJI. */
     public static BossArt fromString(String s) {

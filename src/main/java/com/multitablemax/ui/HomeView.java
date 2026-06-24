@@ -77,6 +77,7 @@ public final class HomeView {
 
         ToggleButton emoji = bossArtButton("😀 Emoji", BossArt.EMOJI, group, current);
         ToggleButton canvas = bossArtButton("🎨 Рисунок", BossArt.CANVAS, group, current);
+        ToggleButton image = bossArtButton("🖼 Картинки", BossArt.IMAGE, group, current);
 
         // Сохраняем выбор сразу; не даём снять обе кнопки.
         group.selectedToggleProperty().addListener((obs, was, now) -> {
@@ -89,7 +90,7 @@ public final class HomeView {
             }
         });
 
-        HBox box = new HBox(12, emoji, canvas);
+        HBox box = new HBox(12, emoji, canvas, image);
         box.setAlignment(Pos.CENTER);
         return box;
     }
