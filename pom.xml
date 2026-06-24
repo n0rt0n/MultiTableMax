@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.multitablemax</groupId>
+    <artifactId>multitablemax</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>MultiTableMax</name>
+    <description>Игровой тренажёр таблицы умножения для детей</description>
+
+    <properties>
+        <maven.compiler.release>25</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>25</javafx.version>
+        <main.module>com.multitablemax</main.module>
+        <main.class>com.multitablemax.Launcher</main.class>
+        <app.name>MultiTableMax</app.name>
+    </properties>
+
+    <dependencies>
+        <!-- Только JavaFX-контролы. Сознательно без сторонних зависимостей,
+             чтобы jlink/jpackage давали маленький самодостаточный установщик. -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+
+            <!-- Запуск:  mvn javafx:run
+                 Образ:   mvn clean javafx:jlink  (создаёт target/${app.name}) -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>${main.module}/${main.class}</mainClass>
+                    <launcher>${app.name}</launcher>
+                    <jlinkImageName>${app.name}</jlinkImageName>
+                    <noManPages>true</noManPages>
+                    <stripDebug>true</stripDebug>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <compress>2</compress>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Упаковка в нативный установщик (.dmg/.exe/.msi/.deb).
+             Сначала нужен образ:  mvn clean javafx:jlink
+             Затем установщик:     mvn -Ppackage jpackage:jpackage -->
+        <profile>
+            <id>package</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>1.6.5</version>
+                        <configuration>
+                            <name>${app.name}</name>
+                            <appVersion>${project.version}</appVersion>
+                            <vendor>MultiTableMax</vendor>
+                            <runtimeImage>${project.build.directory}/${app.name}</runtimeImage>
+                            <module>${main.module}/${main.class}</module>
+                            <destination>${project.build.directory}/dist</destination>
+                            <javaOptions>
+                                <option>-Dfile.encoding=UTF-8</option>
+                            </javaOptions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

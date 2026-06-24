@@ -1,0 +1,198 @@
+/* Дружелюбная детская тема: крупные элементы, мягкие цвета. */
+
+.root-pane {
+    -fx-background-color: linear-gradient(to bottom, #eef6ff, #f7fbff);
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+}
+
+.stars {
+    -fx-font-size: 22px;
+    -fx-text-fill: #f5a623;
+    -fx-font-weight: bold;
+}
+
+.level {
+    -fx-font-size: 16px;
+    -fx-text-fill: #5b6b7c;
+}
+
+.combo {
+    -fx-font-size: 16px;
+    -fx-text-fill: #e0533d;
+    -fx-font-weight: bold;
+}
+
+.timer {
+    -fx-font-size: 20px;
+    -fx-text-fill: #4a90e2;
+    -fx-font-weight: bold;
+}
+
+.timer-low {
+    -fx-text-fill: #e0533d;
+}
+
+.lives {
+    -fx-font-size: 18px;
+    -fx-text-fill: #e0533d;
+    -fx-font-weight: bold;
+}
+
+/* --- Стартовый экран --- */
+
+.home-title {
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b53;
+}
+
+/* --- Экран статистики --- */
+
+.stats-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b53;
+}
+
+.stat-value {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b53;
+}
+
+.stats-scroll {
+    -fx-background-color: transparent;
+}
+
+.stats-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.chooser {
+    -fx-font-size: 17px;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #b7d3f2;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+    -fx-text-fill: #243b53;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+
+.chooser:selected {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-border-color: #4a90e2;
+}
+
+.start-button {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 16;
+    -fx-background-color: linear-gradient(to bottom, #7ed957, #2e9e5b);
+    -fx-text-fill: white;
+    -fx-padding: 12 40 12 40;
+    -fx-cursor: hand;
+}
+
+.start-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #8ee368, #34ad66);
+}
+
+.menu-button {
+    -fx-font-size: 15px;
+    -fx-background-radius: 12;
+    -fx-background-color: #e3edf7;
+    -fx-text-fill: #5b6b7c;
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #d3e2f2;
+}
+
+.reset-button {
+    -fx-font-size: 13px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #b0461f;
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-padding: 4 8 4 8;
+}
+
+.reset-button:hover {
+    -fx-text-fill: #e0533d;
+}
+
+.question {
+    -fx-font-size: 72px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b53;
+}
+
+.answer {
+    -fx-font-size: 44px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-border-color: #b7d3f2;
+    -fx-border-width: 3;
+    -fx-padding: 6 12 6 12;
+}
+
+.answer:focused {
+    -fx-border-color: #4a90e2;
+}
+
+.feedback {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-min-height: 34px;
+    -fx-text-fill: #5b6b7c;
+}
+
+.feedback.correct {
+    -fx-text-fill: #2e9e5b;
+}
+
+.feedback.wrong {
+    -fx-text-fill: #e0533d;
+}
+
+.tables-panel {
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 18;
+    -fx-padding: 16;
+}
+
+.panel-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #243b53;
+}
+
+.table-name {
+    -fx-font-size: 15px;
+    -fx-text-fill: #5b6b7c;
+}
+
+.table-name-active {
+    -fx-text-fill: #2e9e5b;
+    -fx-font-weight: bold;
+}
+
+.progress-bar {
+    -fx-pref-height: 18px;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(to right, #7ed957, #2e9e5b);
+    -fx-background-radius: 9;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #e3edf7;
+    -fx-background-radius: 9;
+}
